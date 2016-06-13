@@ -1,3 +1,5 @@
+//origianl code https://bost.ocks.org/mike/bar/
+
 var Chart = function () {
     this.data = [];
     this.d3Scale = d3.scale.linear();
