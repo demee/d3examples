@@ -17,8 +17,8 @@ module.exports = function(config) {
     files: [
       'public/d3.js',
       'public/lodash.js',
-      'public/chart.js',
-      'public/chart-spec.js'
+      'public/Bar_Char_I/chart.js',
+      'public/Bar_Char_I/chart-spec.js'
     ],
 
 
