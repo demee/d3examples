@@ -1,9 +1,11 @@
-var data = [4, 8, 15, 16, 23, 42];
-
-var Chart = function () {};
+var Chart = function () {
+    this.data = [];
+    this.d3Scale = d3.scale.linear();
+};
 
 Chart.prototype.setData = function (_data) {
     this.data = _data;
+    this.rescale();
 };
 
 Chart.prototype.getData = function () {
@@ -12,22 +14,26 @@ Chart.prototype.getData = function () {
 
 Chart.prototype.appendTo = function (selector) {
     this.body = d3.select(selector);
+    this.rescale();
+}
+
+Chart.prototype.rescale = function () {
+    if(!this.body) return;
+    this.d3Scale
+        .domain([0, d3.max(this.data)])
+        .range([0, this.body.node().getBoundingClientRect().width])
 }
 
 Chart.prototype.render = function () {
+    var self = this;
     this.body
         .selectAll('div')
             .data(this.data)
         .enter().append('div')
-            .style('width', function (d) { return d * 10 + 'px'})
+            .style('width', function (d) { return self.barWidth(d) + 'px'})
             .text(_.identity)
 }
 
-
-// Exaple of use
-
-var chart = new Chart();
-
-chart.appendTo('.chart');
-chart.setData(data);
-chart.render();
+Chart.prototype.barWidth = function (dataValue) {
+    return this.d3Scale(dataValue);
+}
